@@ -1,2 +1,5 @@
 /.idea/
 /venv/
+/resume/__pycache__/
+/Website/__pycache__/
+/resume/migrations/__pycache__/
