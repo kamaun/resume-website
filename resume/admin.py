@@ -47,14 +47,14 @@ class JobAdmin(admin.ModelAdmin):
             'fields': ['description']
         })
     ]
-    inlines = [ProjectInline, TaskInLine]
+    inlines = [ProjectInline]
     list_display = ["position", "work_name", "extra", "current_job"]
 
 
 class SchoolAdmin(admin.ModelAdmin):
     fieldsets = [
         (None, {
-            'fields': [('degree', 'major'), 'school']
+            'fields': [('degree', 'concentration'), 'school']
         }),
         ('Location', {
             'fields': ['city', 'state', 'country']
@@ -63,8 +63,8 @@ class SchoolAdmin(admin.ModelAdmin):
             'fields': [('from_month', 'from_year'), 'current_school', ('end_month', 'end_year')]
         }),
     ]
-    inlines = [ProjectInline, TaskInLine]
-    list_display = ["schoolid", "degree", "major", "school", 'current_school']
+    inlines = [ProjectInline]
+    list_display = ["id", "degree", "concentration", "school", 'current_school']
 
 
 class TechAdmin(admin.ModelAdmin):
@@ -72,11 +72,11 @@ class TechAdmin(admin.ModelAdmin):
 
 
 class TechUseAdmin(admin.ModelAdmin):
-    list_display = ['project', 'technology', 'work', 'school']
+    list_display = ['project', 'technology']
 
 
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ["title", "project", "work", "school"]
+    list_display = ["title", "project"]
 
 
 admin.site.register(Profile)
@@ -86,3 +86,13 @@ admin.site.register(WorkPlaces, JobAdmin)
 admin.site.register(Projects, ProjectAdmin)
 admin.site.register(TechUsed, TechUseAdmin)
 admin.site.register(Task)
+admin.site.register(Certification)
+
+# admin.site.register(Profile)
+# admin.site.register(Technology)
+# admin.site.register(Task)
+# admin.site.register(WorkPlaces)
+# admin.site.register(School)
+# admin.site.register(ProjectType)
+# admin.site.register(TechUsed)
+# admin.site.register()

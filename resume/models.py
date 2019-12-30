@@ -180,3 +180,17 @@ class Task(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Certification(models.Model):
+    cert_type = models.CharField(max_length=50, verbose_name="Type")
+    name = models.CharField(max_length=50, verbose_name="Name")
+    cert_number = models.CharField(max_length=20, verbose_name="Certificate Number")
+    source = models.CharField(max_length=30, verbose_name="Provider")
+
+    class Meta:
+        managed = True
+        app_label = 'resume'
+
+    def __str__(self):
+        return self.name
