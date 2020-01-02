@@ -24,7 +24,174 @@
 {% endblock %}
 
 {% block content %}
-    <section>
 
+    {# About Section #}
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="about">
+        <div class="w-100">
+            {% if profile %}
+                <h1 class="mb-0">
+                    {{ profile.first_name }} <span class="text-primary">{{ profile.last_name }}</span>
+                </h1>
+                <div class="subheading mb-5">{{ profile.location_city }}, {{ profile.location_state }} ·
+                    <a href="mailto:devkevengineer@gmail.com">{{ profile.email2 }}</a>
+                </div>
+                <p class="lead mb-5">
+                    {{ profile.bio }}
+                </p>
+
+                <div class="social-icons">
+                    <a target="_blank" rel="noopener noreferrer" href={{ profile.linkedin }} >
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a target="_blank" rel="noopener noreferrer" href={{ profile.github }}>
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a target="_blank" rel="noopener noreferrer" href={{ profile.bitbucket }}>
+                        <i class="fab fa-bitbucket"></i>
+                    </a>
+                </div>
+            {% endif %}
+        </div>
     </section>
+    <hr class="m-0">
+
+    {# Tools and Skills#}
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="skills">
+        <div class="w-100">
+            {% if technologies %}
+                <h2 class="mb-5">Skills</h2>
+                <div class="row technology">
+                    {% for cat in cat_set_one %}
+                        <div class="col-sm-4 tech-column">
+                            <h4>{{ cat }}</h4>
+                            <ul>
+                                {% for tech in technologies %}
+                                    {% if tech.category == cat %}
+                                        <li>
+                                            {{ tech }}
+                                            <div class="progress">
+                                                <div class="progress-bar progress-bar-striped bg-success"
+                                                     role="progressbar" style="width: {{ tech.proficiency }}%"
+                                                     aria-valuenow="{{ tech.proficiency }}" aria-valuemin="0"
+                                                     aria-valuemax="100">
+                                                    {{ tech.proficiency }}%
+                                                </div>
+                                            </div>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="row technology">
+                    {% for cat2 in cat_set_two %}
+                        <div class="col-sm-4 tech-column">
+                            <h4>{{ cat2 }}</h4>
+                            <ul>
+                                {% for tech in technologies %}
+                                    {% if tech.category == cat2 %}
+                                        <li>
+                                            {{ tech }}
+                                            <div class="progress">
+                                                <div class="progress-bar progress-bar-striped bg-success"
+                                                     role="progressbar" style="width: {{ tech.proficiency }}%"
+                                                     aria-valuenow="{{ tech.proficiency }}" aria-valuemin="0"
+                                                     aria-valuemax="100">
+                                                    {{ tech.proficiency }}%
+                                                </div>
+                                            </div>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </section>
+    <hr class="m-0">
+
+    {# Experience Section #}
+    <section class="resume-section p-3 p-lg-5 d-flex justify-content-center" id="experience">
+        <div class="w-100">
+            {% if jobs %}
+                <h2 class="mb-5">Work Experience</h2>
+                {% for job in jobs %}
+                    <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="resume-content">
+                            <h3 class="mb-0">{{ job.position }}</h3>
+                            <div class="subheading mb-3">{{ job.work_name }}</div>
+                            <p>
+                                {{ job.description }}
+                            </p>
+                        </div>
+                        <div class="resume-date text-md-right">
+                            <span class="text-primary">
+                                {{ job.start_date }} -{% if job.is_current_job %} Present {% else %} {{ job.end_date }} {% endif %}
+                            </span>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </section>
+    <hr class="m-0">
+
+    {# Education Section #}
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="education">
+        <div class="w-100">
+            {% if schools %}
+                <h2 class="mb-5">Education</h2>
+                {% for school in schools %}
+                    <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="resume-content">
+                            <h3 class="mb-0">{{ school.school }}, {{ school.city }}, {{ school.state }}</h3>
+                            <div class="subheading mb-3">{{ school.degree }}</div>
+                            <div>{{ school.concentration }}</div>
+                        </div>
+                        <div class="resume-date text-md-right">
+                            <span class="text-primary">
+                                {{ school.start_date }} -
+                                {% if school.is_current_school %} Present {% else %} {{ school.end_date }} {% endif %}
+                            </span>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </section>
+    <hr class="m-0">
+
+    {# Awards and certification #}
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="awards">
+        <div class="w-100">
+            {% if certificates %}
+                <h2 class="mb-5">Certifications</h2>
+                <ul class="fa-ul mb-0">
+                {% for certificate in certificates %}
+                    <li>
+                        <i class="fa-li fa fa-certificate text-warning"></i>
+                        {{ certificate }} ({{ certificate.certificate_date }})
+                    </li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </section>
+    <hr class="m-0">
+
+    {# Interest Section #}
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="interests">
+        <div class="w-100">
+            {% if profile.interest %}
+                <h2 class="mb-5">Interests</h2>
+                <p class="mb-0">
+                    {{ profile.interest }}
+                </p>
+            {% endif %}
+        </div>
+    </section>
+
 {% endblock %}

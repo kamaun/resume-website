@@ -17,31 +17,37 @@ def get_date(**kwargs):
 
 
 def application():
-    APPLICATION = ["Web Application", "Mobile Application", "Desktop Application"]
-    return [(a, a) for a in APPLICATION]
+    application_base = ["Web Application", "Mobile Application", "Desktop Application", "Raspberry Pi"]
+    return [(a, a) for a in application_base]
 
 
 def category():
-    CATEGORY_BASE = ["Programming", "Framework", "Cloud Services", "Software", "Operating System"]
-    return [(c, c) for c in CATEGORY_BASE]
+    category_base = ["Programming", "Framework", "Cloud Services", "Software", "Operating System", "Application Type"]
+    return [(c, c) for c in category_base]
 
 
 class Profile(models.Model):
     first_name = models.CharField(max_length=20, db_column='FirstName', verbose_name='First Name', default='Kevin')
     last_name = models.CharField(max_length=20, db_column='LastName', verbose_name='Last Name', default='Anderson')
-    occupation = models.CharField(max_length=20, default='Software Developer')
+    occupation = models.CharField(max_length=20, default='Software Engineer')
+    location_city = models.CharField(max_length=30, default='Deerfield Beach')
+    location_state = models.CharField(max_length=10, default='Florida')
     email = models.EmailField(max_length=30, default='kevinnjeri@live.com')
     email2 = models.EmailField(max_length=30, default='devkevengineer@gmail.com')
+    linkedin = models.URLField(verbose_name='LinkedIn', default='https://www.linkedin.com/in/kelvinnjeri/')
+    bitbucket = models.URLField(verbose_name='Bitbucket', default='https://bitbucket.org/knjeri')
+    github = models.URLField(verbose_name='Git Hub', default='https://github.com/kamaun')
     age = models.IntegerField(default=26)
     # cell_number = models.BigIntegerField(default=9547935283, db_column='CellNumber', verbose_name='Cell Number')
     bio = models.TextField(max_length=600, default='Bio')
+    interest = models.TextField(max_length=600, null=True, blank=True)
 
     class Meta:
         managed = True
         app_label = 'resume'
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name}'
+        return f'{self.first_name} {self.last_name} - {self.occupation}'
 
 
 class Technology(models.Model):
@@ -86,6 +92,12 @@ class School(models.Model):
     def is_current_school(self):
         return self.current_school
 
+    def start_date(self):
+        return f'{self.from_month} {self.from_year}'
+
+    def end_date(self):
+        return f'{self.end_month} {self.end_year}'
+
 
 class WorkPlaces(models.Model):
     # jobid = models.AutoField(primary_key=True, db_column='ID')
@@ -115,6 +127,12 @@ class WorkPlaces(models.Model):
     def is_current_job(self):
         return self.current_job
 
+    def start_date(self):
+        return f'{self.from_month} {self.from_year}'
+
+    def end_date(self):
+        return f'{self.end_month} {self.end_year}'
+
 
 class Projects(models.Model):
     # projectid = models.AutoField(primary_key=True, db_column='ID')
@@ -138,7 +156,8 @@ class Projects(models.Model):
 
 
 class ProjectType(models.Model):
-    type_name = models.CharField(max_length=60, db_column='Type')
+    project = models.ForeignKey('Projects', models.CASCADE, null=True, blank=True)
+    technology = models.ForeignKey('Technology', models.CASCADE, null=True, blank=True)
 
     class Meta:
         managed = True
@@ -147,7 +166,7 @@ class ProjectType(models.Model):
         verbose_name_plural = 'Project Types'
 
     def __str__(self):
-        return self.type_name
+        return self.technology
 
 
 class TechUsed(models.Model):
@@ -183,14 +202,19 @@ class Task(models.Model):
 
 
 class Certification(models.Model):
-    cert_type = models.CharField(max_length=50, verbose_name="Type")
+    # cert_type = models.CharField(max_length=50, verbose_name="Type")
     name = models.CharField(max_length=50, verbose_name="Name")
     cert_number = models.CharField(max_length=20, verbose_name="Certificate Number")
     source = models.CharField(max_length=30, verbose_name="Provider")
+    cert_month = models.CharField(max_length=10, choices=get_date(date='month'), verbose_name='Certificate Month', null=True, blank=True)
+    cert_year = models.CharField(max_length=10, choices=get_date(date='year'), verbose_name='Certificate Year', null=True, blank=True)
 
     class Meta:
         managed = True
         app_label = 'resume'
 
     def __str__(self):
-        return self.name
+        return f'{self.source} - {self.name}'
+
+    def certificate_date(self):
+        return f'{self.cert_month} {self.cert_year}'

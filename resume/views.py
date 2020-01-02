@@ -22,21 +22,18 @@ def maintenance(request):
 
 
 def resume(request):
-    # account = get_object_or_404(Profile, pk=1)
-    # test = account.
-    # technologies = get_list_or_404(Technology)
-    # work_experience = get_list_or_404(WorkPlaces, extra=False)
-    # projects = get_list_or_404(Projects)
-    # school = get_list_or_404(School)
 
     return render(request=request,
                   template_name='resume/resume.html',
                   context={
                       'title': 'Resume',
-                      'account': Profile.objects.order_by('-id'),
+                      'profile': Profile,
                       'jobs': WorkPlaces.objects.filter(extra=False).order_by('-id'),
                       'other_jobs': WorkPlaces.objects.filter(extra=True).order_by('-id'),
+                      'schools': School.objects.order_by('-id'),
                       'technologies': Technology.objects.all(),
+                      'cat_set_one': [cat[0] for cat in category()][:int((len(category()))/2)],
+                      'cat_set_two': [cat[0] for cat in category()][int((len(category()))/2):],
                       'certificates': Certification.objects.all()
                   }
                   )
@@ -70,6 +67,7 @@ def contact(request):
     return render(request=request,
                   template_name="resume/contact.html",
                   context={
+                      'title': 'Contact',
                       'form': form,
                   }
                   )
@@ -134,9 +132,6 @@ def other(request):
         'work_experience': work,
     }
     return render(request, template, content)
-
-
-
 
 
 def successView(request):
