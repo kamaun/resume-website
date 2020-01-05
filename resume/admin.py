@@ -19,17 +19,38 @@ class TaskInLine(admin.TabularInline):
     extra = 0
 
 
+class ProfileAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None, {
+            'fields': [
+                ('first_name', 'last_name', 'occupation'),
+                ('location_city', 'location_state'),
+            ]
+        }),
+        ('Contact', {
+            'fields': [
+                ('email', 'email2'),
+                ('linkedin', 'bitbucket', 'github'),
+            ]
+        }),
+        ('Bio', {
+            'fields': ['bio', 'interest']
+        })
+    ]
+
+
 class ProjectAdmin(admin.ModelAdmin):
     fieldsets = [
         (None, {
-            'fields': [('project_name', 'link'), ('school', 'job')]
+            'fields': [('project_name', 'link'),
+                       ('school', 'job')]
         }),
         (' ', {
-            'fields': ['description']
+            'fields': ['role', 'description']
         })
     ]
     inlines = [TechUseInLine, TaskInLine]
-    list_display = ["project_name", "link", "school", "job"]
+    list_display = ["project_name", "role", "school", "job"]
 
 
 class JobAdmin(admin.ModelAdmin):
@@ -79,13 +100,13 @@ class TaskAdmin(admin.ModelAdmin):
     list_display = ["title", "project"]
 
 
-admin.site.register(Profile)
+admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Technology, TechAdmin)
 admin.site.register(School, SchoolAdmin)
 admin.site.register(WorkPlaces, JobAdmin)
 admin.site.register(Projects, ProjectAdmin)
 admin.site.register(TechUsed, TechUseAdmin)
-admin.site.register(Task)
+admin.site.register(Task, TaskAdmin)
 admin.site.register(Certification)
 
 # admin.site.register(Profile)

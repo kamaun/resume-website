@@ -14,39 +14,42 @@ def index(request):
 
 
 def maintenance(request):
-    return render(request=request,
-                  template_name='resume/maintenance.html',
-                  context={
-                      'title': 'Maintenance'
-                  })
+    return render(
+        request=request,
+        template_name='resume/maintenance.html',
+        context={
+            'title': 'Maintenance'
+        }
+    )
 
 
 def resume(request):
-
-    return render(request=request,
-                  template_name='resume/resume.html',
-                  context={
-                      'title': 'Resume',
-                      'profile': Profile,
-                      'jobs': WorkPlaces.objects.filter(extra=False).order_by('-id'),
-                      'other_jobs': WorkPlaces.objects.filter(extra=True).order_by('-id'),
-                      'schools': School.objects.order_by('-id'),
-                      'technologies': Technology.objects.all(),
-                      'cat_set_one': [cat[0] for cat in category()][:int((len(category()))/2)],
-                      'cat_set_two': [cat[0] for cat in category()][int((len(category()))/2):],
-                      'certificates': Certification.objects.all()
-                  }
-                  )
+    return render(
+        request=request,
+        template_name='resume/resume.html',
+        context={
+            'title': 'Resume',
+            'profile': Profile,
+            'jobs': WorkPlaces.objects.filter(extra=False).order_by('-id'),
+            'other_jobs': WorkPlaces.objects.filter(extra=True).order_by('-id'),
+            'schools': School.objects.order_by('-from_year', '-from_month'),
+            'technologies': Technology.objects.all().order_by('-proficiency'),
+            'cat_set_one': [cat[0] for cat in category()][:int((len(category())) / 2)],
+            'cat_set_two': [cat[0] for cat in category()][int((len(category())) / 2):],
+            'certificates': Certification.objects.all().order_by('-cert_year', '-cert_month')
+        }
+    )
 
 
 def portfolio(request):
-    return render(request=request,
-                  template_name='resume/portfolio.html',
-                  context={
-                      'title': 'Portfolio',
-                      'projects': Projects.objects.all()
-                  }
-                  )
+    return render(
+        request=request,
+        template_name='resume/portfolio.html',
+        context={
+            'title': 'Portfolio',
+            'projects': Projects.objects.all()
+        }
+    )
 
 
 def contact(request):
@@ -64,22 +67,25 @@ def contact(request):
                 return HttpResponse('Invalid header found.')
             return redirect('success')
 
-    return render(request=request,
-                  template_name="resume/contact.html",
-                  context={
-                      'title': 'Contact',
-                      'form': form,
-                  }
-                  )
+    return render(
+        request=request,
+        template_name="resume/contact.html",
+        context={
+            'title': 'Contact',
+            'form': form,
+        }
+    )
 
 
 def project(request, project_id):
-    return render(request=request,
-                  template_name='resume/project.html',
-                  context={
-                      'title': 'Project',
-                      'project': Projects.objects.filter(id=project_id)
-                  })
+    return render(
+        request=request,
+        template_name='resume/project.html',
+        context={
+            'title': 'Project',
+            'project': Projects.objects.filter(id=project_id)
+        }
+    )
 
 
 def projects(request):
