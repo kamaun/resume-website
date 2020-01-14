@@ -1,1 +1,55 @@
 {% extends 'resume/base.html' %}
+{% load static %}
+
+{% block content %}
+   <section class="container resume-section p-3 p-lg-5 d-flex align-items-center" id="project_detail">
+       <div class="w-100">
+           <h1 class="mb-4">{{ current_project.project_name }}</h1>
+           <div class="mb-auto row">
+               <div class="col-sm-6">
+                   <span class="mb-lg-0">Role: </span> {{ current_project.role }}
+               </div>
+               {% if current_project.link %}
+                <div class="col-md-6">
+                    Project Link: <a target="_blank" href={{ current_project.link }}>{{ current_project.link }}</a>
+                </div>
+               {% endif %}
+
+           </div>
+           <div class="container project-detail project-technology">
+                <hr class="mt-0 mb-10">
+                <h4>Technology</h4>
+                <div class="row project-technology-row">
+                    <div class="col-sm-6 tech-side-1">
+                        <ul class="list-unstyled">
+                            {% for use in tech_set_one %}
+                                <li><span class="text-primary">{{ use.technology }}</span>:- {{ use.purpose }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 tech-side-2">
+                        <ul class="list-unstyled">
+                            {% for use in tech_set_two %}
+                                <li><span class="text-primary">{{ use.technology }}</span>:- {{ use.purpose }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+           </div>
+           <div class="container project-detail project-tasks">
+                <hr class="mt-0 mb-10">
+                <h4>Tasks</h4>
+
+                {% for task in tasks %}
+                    <div class="container task-detail">
+                        <h5>{{ task.title }}</h5>
+                        <div class="container task-description">
+                            {{ task.description }}
+                        </div>
+                    </div>
+                    <br>
+                {% endfor %}
+           </div>
+       </div>
+   </section>
+{% endblock %}

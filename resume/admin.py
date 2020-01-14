@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import *
 
+
 # Register your models here.
 
 
@@ -19,13 +20,18 @@ class TaskInLine(admin.TabularInline):
     extra = 0
 
 
+class ProjectImagesInline(admin.StackedInline):
+    model = ProjectImages
+    extra = 0
+
+
 class ProfileAdmin(admin.ModelAdmin):
     fieldsets = [
         (None, {
-            'fields': [
-                ('first_name', 'last_name', 'occupation'),
-                ('location_city', 'location_state'),
-            ]
+            'fields': ['profile_pic',
+                       ('first_name', 'last_name', 'occupation'),
+                       ('location_city', 'location_state'),
+                       ]
         }),
         ('Contact', {
             'fields': [
@@ -42,15 +48,24 @@ class ProfileAdmin(admin.ModelAdmin):
 class ProjectAdmin(admin.ModelAdmin):
     fieldsets = [
         (None, {
-            'fields': [('project_name', 'link'),
-                       ('school', 'job')]
+            'fields': ['project_image',
+                       ('project_name', 'link'),
+                       ('school', 'job', 'personal')]
+        }),
+        ('Dates', {
+            'fields': [
+                ('from_month', 'from_year'),
+                'in_progress',
+                ('end_month', 'end_year'),
+            ]
         }),
         (' ', {
             'fields': ['role', 'description']
-        })
+        }),
+
     ]
-    inlines = [TechUseInLine, TaskInLine]
-    list_display = ["project_name", "role", "school", "job"]
+    inlines = [ProjectImagesInline, TechUseInLine, TaskInLine]
+    list_display = ["project_name", "link", "project_image", "role"]
 
 
 class JobAdmin(admin.ModelAdmin):
@@ -108,6 +123,7 @@ admin.site.register(Projects, ProjectAdmin)
 admin.site.register(TechUsed, TechUseAdmin)
 admin.site.register(Task, TaskAdmin)
 admin.site.register(Certification)
+admin.site.register(ProjectImages)
 
 # admin.site.register(Profile)
 # admin.site.register(Technology)

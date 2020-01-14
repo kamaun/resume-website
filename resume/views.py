@@ -42,12 +42,37 @@ def resume(request):
 
 
 def portfolio(request):
+    all_projects = Projects.objects.all().order_by('-from_year', '-from_month', '-id')
+
     return render(
-        request=request,
         template_name='resume/portfolio.html',
+        request=request,
         context={
             'title': 'Portfolio',
-            'projects': Projects.objects.all()
+            'personal_projects': all_projects.filter(personal=True),
+            'work_projects': all_projects.filter(personal=False, job__isnull=False),
+            'school_projects': all_projects.filter(personal=False, school__isnull=False),
+            'tech_used': TechUsed.objects.all(),
+            'tasks': Task.objects.all(),
+        }
+    )
+
+
+def project(request, project_id):
+    current_project = get_object_or_404(Projects, id=project_id)
+    techused = TechUsed.objects.filter(project=current_project)
+
+
+    return render(
+        request=request,
+        template_name='resume/project.html',
+        context={
+            'title': 'Project',
+            'current_project': current_project,
+            'technologies': TechUsed.objects.filter(project=current_project),
+            'tech_set_one': techused[:(int(len(techused)/2))],
+            'tech_set_two': techused[(int(len(techused)/2)):],
+            'tasks': Task.objects.filter(project=current_project),
         }
     )
 
@@ -75,70 +100,3 @@ def contact(request):
             'form': form,
         }
     )
-
-
-def project(request, project_id):
-    return render(
-        request=request,
-        template_name='resume/project.html',
-        context={
-            'title': 'Project',
-            'project': Projects.objects.filter(id=project_id)
-        }
-    )
-
-
-def projects(request):
-    projectscnt = get_list_or_404(Projects)
-    num = len(projectscnt)
-    if num % 2 == 0:
-        p = int(num / 2)
-    else:
-        p = int(num / 2) + 1
-
-    projects = get_list_or_404(Projects)[:p]
-    projects2 = get_list_or_404(Projects)[p:num]
-    techs_used = get_list_or_404(TechUsed)
-    task = get_list_or_404(Task)
-    context = {
-        'projects': projects,
-        'projects2': projects2,
-        'techs_used': techs_used,
-        'tasks': task,
-    }
-    template = 'Resume/projects.html'
-    return render(request, template, context)
-
-
-def projectdetails(request, projectid):
-    project = get_object_or_404(Projects, projectid=projectid)
-    techcnt = get_list_or_404(TechUsed, project=project)
-    num = len(techcnt)
-    if num % 2 == 0:
-        p = int(num / 2)
-    else:
-        p = int(num / 2) + 1
-    technology = get_list_or_404(TechUsed, project=project)[:p]
-    technology2 = get_list_or_404(TechUsed, project=project)[p:num]
-    tasks = get_list_or_404(Task, project=project)
-    template = 'Resume/projectdetails.html'
-    content = {
-        'project': project,
-        'TechUse1': technology,
-        'TechUse2': technology2,
-        'tasks': tasks,
-    }
-    return render(request, template, content)
-
-
-def other(request):
-    template = 'Resume/other.html'
-    work = get_list_or_404(WorkPlaces, extra=True)
-    content = {
-        'work_experience': work,
-    }
-    return render(request, template, content)
-
-
-def successView(request):
-    return HttpResponse("You email has been sent! Thank you for reaching out!")

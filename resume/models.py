@@ -1,5 +1,5 @@
 from django.db import models
-import datetime
+import datetime, os
 
 
 # Create your models here.
@@ -16,13 +16,21 @@ def get_date(**kwargs):
         return [(y, y) for y in years]
 
 
+def get_profile_image_url(instance, filename):
+    return os.path.join('photos/profile', str(instance.id), filename)
+
+
+def get_project_image_url(instance, filename):
+    return os.path.join('photos/project', str(instance.id), filename)
+
+
 def application():
     application_base = ["Web Application", "Mobile Application", "Desktop Application", "Raspberry Pi"]
     return [(a, a) for a in application_base]
 
 
 def category():
-    category_base = ["Programming", "Framework", "Cloud Services", "Software", "Operating System", "Application Type"]
+    category_base = ["Application Type", "Programming", "Framework", "Cloud Services", "Software", "Operating System"]
     return [(c, c) for c in category_base]
 
 
@@ -32,13 +40,14 @@ class Profile(models.Model):
     occupation = models.CharField(max_length=20, default='Software Engineer')
     location_city = models.CharField(max_length=30, default='Deerfield Beach')
     location_state = models.CharField(max_length=10, default='Florida')
+    profile_pic = models.ImageField(upload_to=get_profile_image_url, null=True, blank=True)
     email = models.EmailField(max_length=30, default='kevinnjeri@live.com')
     email2 = models.EmailField(max_length=30, default='devkevengineer@gmail.com')
     linkedin = models.URLField(verbose_name='LinkedIn', default='https://www.linkedin.com/in/kelvinnjeri/')
     bitbucket = models.URLField(verbose_name='Bitbucket', default='https://bitbucket.org/knjeri')
     github = models.URLField(verbose_name='Git Hub', default='https://github.com/kamaun')
     age = models.IntegerField(default=26)
-    # cell_number = models.BigIntegerField(default=9547935283, db_column='CellNumber', verbose_name='Cell Number')
+    cell_number = models.BigIntegerField(default=9547935283, db_column='CellNumber', verbose_name='Cell Number')
     bio = models.TextField(max_length=600, default='Bio')
     interest = models.TextField(max_length=600, null=True, blank=True)
 
@@ -142,6 +151,7 @@ class WorkPlaces(models.Model):
 
 class Projects(models.Model):
     # projectid = models.AutoField(primary_key=True, db_column='ID')
+    project_image = models.ImageField(upload_to=get_project_image_url, null=True, blank=True)
     project_name = models.CharField(max_length=50, db_column='Project')
     link = models.URLField(max_length=128, blank=True, verbose_name='Url')
     role = models.CharField(max_length=30, null=True)
@@ -176,6 +186,19 @@ class Projects(models.Model):
         return f'{self.end_month} {self.end_year}'
 
 
+class ProjectImages(models.Model):
+    project = models.ForeignKey('Projects', models.CASCADE)
+    image = models.ImageField(upload_to=get_project_image_url)
+
+    class Meta:
+        managed = True
+        app_label = 'resume'
+        verbose_name = 'Project Image'
+
+    def __str__(self):
+        return self.project
+
+
 class ProjectType(models.Model):
     project = models.ForeignKey('Projects', models.CASCADE, null=True, blank=True)
     technology = models.ForeignKey('Technology', models.CASCADE, null=True, blank=True)
@@ -193,8 +216,6 @@ class ProjectType(models.Model):
 class TechUsed(models.Model):
     project = models.ForeignKey('Projects', models.CASCADE)
     technology = models.ForeignKey('Technology', models.CASCADE, null=True)
-    # school = models.ForeignKey('School', models.CASCADE, null=True, blank=True)
-    # work = models.ForeignKey(WorkPlaces, models.CASCADE, null=True, blank=True)
     purpose = models.TextField(max_length=200, default="Technology use")
 
     class Meta:
@@ -209,8 +230,6 @@ class TechUsed(models.Model):
 
 class Task(models.Model):
     title = models.CharField(max_length=50)
-    # work = models.ForeignKey(WorkPlaces, models.CASCADE, null=True, blank=True)
-    # school = models.ForeignKey(School, models.CASCADE, null=True, blank=True)
     project = models.ForeignKey(Projects, models.CASCADE, null=True, blank=True)
     description = models.TextField(max_length=800)
 

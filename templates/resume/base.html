@@ -35,10 +35,15 @@
     </title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
     <!-- Custom fonts for this template -->
-    <link rel="stylesheet" type="text/css" href={% static 'resume/vendor/fontawesome-free/css/all.min.css' %} >
+    {% block links %}
+        <link rel="stylesheet" type="text/css" href={% static 'resume/vendor/resume/fontawesome-free/css/all.min.css' %} >
+        <link rel="stylesheet" type="text/css" href={% static "resume/vendor/portfolio/fontawesome-free/css/all.min.css" %}>
+
+    {% endblock %}
 
     <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet">
@@ -48,7 +53,6 @@
     <!-- Custom styles for this template -->
     <link rel="stylesheet" href={% static 'resume/css/resume.min.css' %} >
     <link rel="stylesheet" href={% static 'resume/css/freelancer.min.css' %}>
-{#    <link rel="stylesheet" href={% static 'resume/css/resume.min.css' %}>#}
 
 </head>
 
