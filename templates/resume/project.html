@@ -10,9 +10,10 @@
                    <span class="mb-lg-0">Role: </span> {{ current_project.role }}
                </div>
                {% if current_project.link %}
-                <div class="col-md-6">
-                    Project Link: <a target="_blank" href={{ current_project.link }}>{{ current_project.link }}</a>
-                </div>
+                    <div class="col-md-6">
+                        Project Link:
+                        <a target="_blank" href={{ current_project.link }}>{{ current_project.link }}</a>
+                    </div>
                {% endif %}
 
            </div>

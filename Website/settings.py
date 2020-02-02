@@ -37,7 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Added applications
     'resume.apps.ResumeConfig',
+    'blog.apps.BlogConfig',
+    'crispy_forms',
+    'phone_field',
+    'antispam'
+
 ]
 
 MIDDLEWARE = [
@@ -48,6 +54,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # Added middleware
+    'whitenoise.middleware.WhiteNoiseMiddleware'
 ]
 
 ROOT_URLCONF = 'Website.urls'
@@ -119,3 +127,38 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+    'var/www/static',
+]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_FILE_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+MEDIA_URL = '/photos/'
+MEDIA_DIRS = [
+    os.path.join(BASE_DIR, 'photos'),
+    'var/www/photos',
+]
+MEDIA_ROOT = os.path.join(BASE_DIR, 'photos')
+
+
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'no6181089@gmail.com'
+EMAIL_HOST_PASSWORD = 'De@0312*Ke'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+EMAIL_SUBJECT_PREFIX = '[PORTFOLIO]'
+
+# # Akismet protection configuration (optional)
+# AKISMET_API_KEY = '<akismet api-key>'
+# AKISMET_SITE_URL = '<base site url>'
+# AKISMET_TEST_MODE = False
+#
+# # reCAPTCHA default configuration (optional)
+# RECAPTCHA_SITEKEY = 'sitekey'
+# RECAPTCHA_SECRETKEY = 'secretkey'
+# RECAPTCHA_WIDGET = 'antispam.captcha.widgets.ReCAPTCHA'
+# RECAPTCHA_TIMEOUT = 5
+# RECAPTCHA_PASS_ON_ERROR = False

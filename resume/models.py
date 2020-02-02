@@ -48,8 +48,9 @@ class Profile(models.Model):
     github = models.URLField(verbose_name='Git Hub', default='https://github.com/kamaun')
     age = models.IntegerField(default=26)
     cell_number = models.BigIntegerField(default=9547935283, db_column='CellNumber', verbose_name='Cell Number')
-    bio = models.TextField(max_length=600, default='Bio')
-    interest = models.TextField(max_length=600, null=True, blank=True)
+    bio = models.TextField()
+    interest = models.TextField()
+    pro_bio = models.TextField(blank=True)
 
     class Meta:
         managed = True
@@ -172,6 +173,9 @@ class Projects(models.Model):
 
     def __str__(self):
         return self.project_name
+
+    def short_description(self):
+        return f"{self.description[:250]}...\t"
 
     def is_personal_project(self):
         return self.personal

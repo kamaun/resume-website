@@ -13,57 +13,47 @@
         <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#work_projects">Work Projects</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#school_projects">School Projects</a>
-        </li>
+{#        <li class="nav-item">#}
+{#            <a class="nav-link js-scroll-trigger" href="#school_projects">School Projects</a>#}
+{#        </li>#}
     </ul>
 {% endblock %}
 
 {% block content %}
-    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="personal_projects">
+    <div class="container portfolio-intro">
+          <hr class="m-1">
+    </div>
+    <section class="page-section portfolio p-3 p-lg-5 d-flex align-items-center" id="personal_projects">
         <div class="w-100">
             {% if personal_projects %}
                 <h2 class="mb-4">Personal Projects</h2>
-                 <hr class="m-1">
+                <hr class="m-1">
                 <div class="row">
 
                     <!--Project Object -->
                     {% for project in personal_projects %}
                         <div class="col-md-6 col-lg-4" >
-                            <div class="portfolio-item mx-auto border-right" data-toggle="modal" data-target="#portfolioModal1">
-                                <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                                    <div class="portfolio-item-caption-content text-center text-white">
-                                        <i class="fas fa-plus fa-3x"></i>
+                            <div class="portfolio-item mx-auto fa-border" data-toggle="modal" data-target="#portfolioModal{{ project.id }}">
+                                <div class="align-items-center justify-content-center" style="height: 300px; width: 300px;">
+                                    <h4 class="mb-3">{{ project.project_name }}</h4>
+                                    <div class="project-detail project-technology text-left">
+                                        <h6 class="mb-0">Summary</h6>
+                                        <div class="container project-summary">
+                                            <p class="mb-5">
+                                                {{ project.short_description }}
+                                                <span class="text-left text-primary">Click for more details </span>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-                                <a target="_blank" href={% url 'resume:project' project.id %}>
-                                    <h3 class="mb-3">{{ project.project_name }}</h3>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <h5>Technology</h5>
-                                            <ul class="list-unstyled">
-                                                {% for tech in tech_used %}
-                                                    {% if tech.project == project %}
-                                                        <li>{{tech.technology}}</li>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            </ul>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <h5>Tasks</h5>
-                                            <ul class="list-unstyled">
-                                                {% for task in tasks %}
-                                                    {% if task.project == project %}
-                                                        <li>{{task.title}}</li>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            </ul>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <img alt="" src={{ project.project_image }} >
-                                        </div>
+                                <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100"
+                                     style="height: 300px; width: 300px;">
+                                    <div class="portfolio-item-caption-content text-center text-white container"  >
+                                        <i class="fas fa-plus fa-3x"></i>
+{#                                        Click/tap here for more details...#}
                                     </div>
-                                </a>
+                                </div>
+
                             </div>
                         </div>
                     {% endfor %}
@@ -73,7 +63,7 @@
         </div>
     </section>
 
-    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="work_projects">
+    <section class="page-section portfolio p-3 p-lg-5 d-flex align-items-center" id="work_projects">
         <div class="w-100">
             {% if work_projects %}
                 <h2 class="mb-4">Work Projects</h2>
@@ -82,39 +72,28 @@
 
                     <!--Project Object -->
                     {% for project in work_projects %}
-                        <div class="col-md-6 col-lg-4">
-                            <div class="portfolio-item mx-auto border-right" data-toggle="modal" data-target="#portfolioModal1">
-                                <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                                    <div class="portfolio-item-caption-content text-center text-white">
-                                        <i class="fas fa-plus fa-3x"></i>
+                        <div class="col-md-6 col-lg-4" >
+                            <div class="portfolio-item mx-auto fa-border" data-toggle="modal" data-target="#portfolioModal{{ project.id }}">
+                                <div class="align-items-center justify-content-center" style="height: 300px; width: 300px;">
+                                    <h4 class="mb-3">{{ project.project_name }}</h4>
+                                    <div class="project-detail project-technology text-left">
+                                        <h6 class="mb-0">Summary</h6>
+                                        <div class="container project-summary">
+                                            <p class="mb-5">
+                                                {{ project.short_description }}
+                                                <span class="text-left text-primary">Click for more details </span>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-                                <a target="_blank" href={% url 'resume:project' project.id %}>
-                                    <h3 class="mb-3">{{ project.project_name }}</h3>
-
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <h5>Technology</h5>
-                                            <ul class="list-unstyled">
-                                                {% for tech in tech_used %}
-                                                    {% if tech.project == project %}
-                                                        <li>{{tech.technology}}</li>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            </ul>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <h5>Tasks</h5>
-                                            <ul class="list-unstyled">
-                                                {% for task in tasks %}
-                                                    {% if task.project == project %}
-                                                        <li>{{task.title}}</li>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            </ul>
-                                        </div>
+                                <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100"
+                                     style="height: 300px; width: 300px;">
+                                    <div class="portfolio-item-caption-content text-center text-white container"  >
+                                        <i class="fas fa-plus fa-3x"></i>
+{#                                        Click/tap here for more details...#}
                                     </div>
-                                </a>
+                                </div>
+
                             </div>
                         </div>
                     {% endfor %}
@@ -124,7 +103,7 @@
         </div>
     </section>
 
-    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="school_projects">
+    <section class="page-section portfolio p-3 p-lg-5 d-flex align-items-center" id="school_projects">
         <div class="w-100">
             {% if school_projects %}
                 <h2 class="mb-4">School Projects</h2>
@@ -133,39 +112,29 @@
 
                     <!--Project Object -->
                     {% for project in school_projects %}
-                        <div class="col-md-6 col-lg-4">
-                            <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal1">
-                                <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                                    <div class="portfolio-item-caption-content text-center text-white">
-                                        <i class="fas fa-plus fa-3x"></i>
+                        <div class="col-md-6 col-lg-4" >
+                            <div class="portfolio-item mx-auto fa-border" data-toggle="modal" data-target="#portfolioModal{{ project.id }}">
+                                <div class="align-items-center justify-content-center" style="height: 300px; width: 300px;">
+                                    <h4 class="mb-3">{{ project.project_name }}</h4>
+                                    <div class="project-detail project-technology text-left">
+                                        <h6 class="mb-0">Summary</h6>
+                                        <div class="container project-summary">
+                                            <p class="mb-5">
+                                                {{ project.short_description }}
+                                                <span class="text-left text-primary">Click for more details </span>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-                                <a target="_blank" href={% url 'resume:project' project.id %}>
-                                    <h3 class="mb-3">{{ project.project_name }}</h3>
 
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <h5>Technology</h5>
-                                            <ul class="list-unstyled">
-                                                {% for tech in tech_used %}
-                                                    {% if tech.project == project %}
-                                                        <li>{{tech.technology}}</li>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            </ul>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <h5>Tasks</h5>
-                                            <ul class="list-unstyled">
-                                                {% for task in tasks %}
-                                                    {% if task.project == project %}
-                                                        <li>{{task.title}}</li>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            </ul>
-                                        </div>
+                                <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100"
+                                     style="height: 300px; width: 300px;">
+                                    <div class="portfolio-item-caption-content text-center text-white container"  >
+                                        <i class="fas fa-plus fa-3x"></i>
+{#                                        Click/tap here for more details...#}
                                     </div>
-                                </a>
+                                </div>
+
                             </div>
                         </div>
                     {% endfor %}
@@ -174,5 +143,124 @@
             {% endif %}
         </div>
     </section>
-    <hr class="m-0">
+
+    <!-- Modals -->
+    {% if all_projects %}
+    {% for project in all_projects %}
+        <div class="portfolio-modal modal fade" id="portfolioModal{{ project.id }}" tabindex="-1" role="dialog"
+             aria-labelledby="portfolioModal1Label" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            <i class="fas fa-times"></i>
+                        </span>
+                    </button>
+                    <div class="modal-body text-center">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                <!-- Portfolio Modal - Title -->
+                                    <h3 class="portfolio-modal-title text-secondary text-uppercase mb-0">
+                                        {{ project.project_name }}
+                                    </h3>
+                                    <!-- Icon Divider -->
+                                    <div class="divider-custom">
+                                        <div class="divider-custom-line"></div>
+                                            <div class="divider-custom-icon">
+                                                <i class="fas fa-star"></i>
+                                            </div>
+                                        <div class="divider-custom-line"></div>
+                                    </div>
+
+                                    <div class="mb-auto row text-left">
+                                       <div class="col-sm-6">
+                                           <span class="mb-lg-0">Role: </span> {{ project.role }}
+                                       </div>
+                                       {% if project.link %}
+                                            <div class="col-md-6">
+                                                Project Link:
+                                                <a target="_blank" href={{ project.link }}>{{ project.link }}</a>
+                                            </div>
+                                       {% endif %}
+                                    </div>
+                                    <hr class="mt-0 mb-10">
+
+                                    <div class="project-detail project-technology text-left">
+                                        <h4>Summary</h4>
+                                        <div class="container project-technology-row">
+                                            <p class="mb-5">
+                                                {{ project.description }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <hr class="mt-0 mb-10">
+
+                                    <div class="project-detail project-technology text-left">
+{#                                        <table class="container technology-detail-table ta">#}
+{#                                            <tr>#}
+{#                                                <th><h4 class="col">Technology</h4></th>#}
+{#                                                <th><h4 class="col">Use/Purpose</h4></th>#}
+{#                                            </tr>#}
+{#                                            {% for use in all_tech_uses %}#}
+{#                                                {% if use.project == project %}#}
+{#                                                    <tr>#}
+{#                                                        <td>#}
+{#                                                            <span class="text-primary">#}
+{#                                                            {{ use.technology }}#}
+{#                                                            </span>#}
+{#                                                        </td>#}
+{#                                                        <td>{{ use.purpose }}</td>#}
+{#                                                    </tr>#}
+{#                                                {% endif %}#}
+{#                                            {% endfor %}#}
+{#                                        </table>#}
+                                        <h4>Technology</h4>
+                                        <div class="project-technology-row">
+                                            <div class="tech-side-1">
+                                                <ul class="list-unstyled">
+                                                    {% for use in all_tech_uses %}
+                                                        {% if use.project == project %}
+                                                            <li>
+                                                                <span class="text-primary">
+                                                                    {{ use.technology }}
+                                                                </span>:- {{ use.purpose }}
+                                                            </li>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr class="mt-0 mb-10">
+
+                                    <div class="project-detail project-tasks text-left">
+                                        <h4>Tasks</h4>
+                                        {% for task in all_tasks %}
+                                            {% if task.project == project %}
+                                                <div class="container task-detail">
+                                                    <h5>{{ task.title }}</h5>
+                                                    <div class="container task-description">
+                                                        {{ task.description }}
+                                                    </div>
+                                                </div>
+                                                <br>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+
+                                    <button class="btn btn-primary" href="#" data-dismiss="modal">
+                                      <i class="fas fa-times fa-fw"></i>
+                                      Close Window
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    {% endif %}
+
 {% endblock %}

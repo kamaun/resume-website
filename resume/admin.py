@@ -40,7 +40,7 @@ class ProfileAdmin(admin.ModelAdmin):
             ]
         }),
         ('Bio', {
-            'fields': ['bio', 'interest']
+            'fields': ['bio', 'interest', 'pro_bio']
         })
     ]
 
