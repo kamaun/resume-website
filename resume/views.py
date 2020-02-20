@@ -24,8 +24,26 @@ def maintenance(request):
     )
 
 
+def home(request):
+    all_projects = Projects.objects.all().order_by('-from_year', '-from_month', '-id')
+
+    return render(
+        request=request,
+        template_name='resume/home.html',
+        context={
+            # 'title': 'Resume',
+            'profile': Profile.objects.first(),
+            'all_projects': all_projects,
+            'personal_projects': all_projects.filter(personal=True),
+            'work_projects': all_projects.filter(personal=False, job__isnull=False),
+            'school_projects': all_projects.filter(personal=False, school__isnull=False),
+            'all_tech_uses': TechUsed.objects.all(),
+            'all_tasks': Task.objects.all(),
+        }
+    )
+
+
 def resume(request):
-    profile = Profile.objects.first()
     return render(
         request=request,
         template_name='resume/resume.html',
@@ -75,32 +93,6 @@ def project(request, project_id):
             'tech_set_one': tech_used[:(int(len(tech_used) / 2))],
             'tech_set_two': tech_used[(int(len(tech_used) / 2)):],
             'tasks': Task.objects.filter(project=current_project),
-        }
-    )
-
-
-def contact2(request):
-    if request.method == 'GET':
-        form = ContactForm()
-    else:
-        form = ContactForm(request.POST)
-        if form.is_valid():
-            from_email = form.cleaned_data['from_email']
-            subject = form.cleaned_data['subject']
-            message = form.cleaned_data['message']
-
-            try:
-                send_mail(subject, message, from_email, ['devkevengineer@gmail.com'])
-            except BadHeaderError:
-                return HttpResponse("Invalid header found.")
-            return redirect('success')
-
-    return render(
-        request=request,
-        template_name="resume/contact.html",
-        context={
-            'title': 'Contact',
-            'form': form,
         }
     )
 

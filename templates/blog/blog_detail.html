@@ -1,0 +1,41 @@
+{% extends 'resume/base.html' %}
+{% load static %}
+
+{% block nav %}
+    <p style="color: white">
+        {{ profile.short_bio }}
+        <a class="underline" style="color: white" href={% url 'resume:portfolio' %}>Continue reading --></a>
+    </p>
+{% endblock %}
+
+{% block content %}
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="blog{{ blog.id }}">
+        <div class="mb-5 w-100">
+            <h2 class="mb-5">{{ blog.topic }}</h2>
+            <span class="text-primary">{{ blog.date }}</span>
+            <div class="container text-left">
+                 <p class="lead mb-5">
+                     {{ blog.post | linebreaks }}
+                 </p>
+            </div>
+            <div class="container text-left">
+                {% for ref in references %}
+{#                    {% if ref.post_title == blog %}#}
+                        <p class="lead mb-3">
+                            {{ ref.author }}.  "{{ ref.reference_title }}"  {{ ref.date }} <br>
+                            {% if ref.is_web_page %}
+                                Webpage: <a href={{ ref.web_page }}>{{ ref.web_page }}</a>
+                            {% elif ref.is_book %}
+                                Book: {{ ref.book_name }}
+                                Chapter: {{ ref.chapter }}
+                            {% elif ref.is_report %}
+                                Report Name: {{ ref.report_name }}
+                            {% endif %}
+                        </p>
+{#                    {% endif %}#}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

@@ -59,6 +59,9 @@ class Profile(models.Model):
     def __str__(self):
         return f'{self.first_name} {self.last_name} - {self.occupation}'
 
+    def short_bio(self):
+        return f'{self.bio[:190]}...'
+
 
 class Technology(models.Model):
     # techid = models.AutoField(primary_key=True, db_column='ID')
@@ -175,7 +178,7 @@ class Projects(models.Model):
         return self.project_name
 
     def short_description(self):
-        return f"{self.description[:250]}...\t"
+        return f"{self.description[:150]}...\t"
 
     def is_personal_project(self):
         return self.personal

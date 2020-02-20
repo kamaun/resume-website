@@ -61,7 +61,7 @@
         <!-- Top Bar Navigation -->
         <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
             <div class="container">
-                <a class="navbar-brand js-scroll-trigger" href={% url 'resume:resume' %}>
+                <a class="navbar-brand js-scroll-trigger" href={% url 'resume:portfolio' %}>
 {#                    <img alt="Kevin Anderson" style="size: auto" src={% static 'resume/images/profile.jpeg' %}>#}
                     Devkev Engineering
                 </a>
@@ -70,15 +70,16 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="nav navbar-nav ml-auto">
-                        <li class="nav-item dropdown mx-0 mx-lg-1">
-                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href={% url 'blog:home' %}>Blogs</a>
+                        <li class="nav-item mx-0 mx-lg-1">
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href={% url 'blog:summary' %}>Blog</a>
                         </li>
-                        <li class="nav-item dropdown mx-0 mx-lg-1">
-                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href={% url 'resume:resume' %}>Profile</a>
+                        <li class="nav-item mx-0 mx-lg-1">
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href={% url 'resume:profile' %}>Portfolio</a>
                         </li>
                         <li class="nav-item mx-0 mx-lg-1">
                             <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href={% url 'resume:contact' %}>Contact</a>
                         </li>
+
                         {% if user.is_authenticated %}
                             <li class="nav-item mx-0 mx-lg-1">
                                 <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" target="_blank" href="{% url 'admin:index' %}">ADMIN</a>
