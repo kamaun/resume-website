@@ -1,9 +1,20 @@
 {% extends 'blog/base.html' %}
-
+{% block nav %}
+    <p style="color: white">
+        {{ profile.short_bio }}
+        <a class="underline" style="color: white; font-weight: bold;" href={% url 'resume:portfolio' %}>See full profile --></a>
+    </p>
+{% endblock %}
 {% block content %}
-    <br class="mb-7">
-    <div>
-        <h2>Coming soon!</h2>
-        <p>Sorry, this page is still in construction, please check in again later</p>
-    </div>
+    <br class="mb-10">
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="blog{{ blog.id }}">
+        <div class="mb-5 w-100">
+            <h3 class="mb-5">Under Construction</h3>
+            <div class="container text-left">
+                <p class="lead mb-5">
+                    Sorry for the inconvenience. Check back again soon and I'll have this page running with content
+                </p>
+            </div>
+        </div>
+    </section>
 {% endblock %}

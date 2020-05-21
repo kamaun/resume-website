@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'crispy_forms',
     'phone_field',
-    'antispam'
+    # 'antispam'
 
 ]
 

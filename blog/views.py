@@ -2,6 +2,7 @@ from django.shortcuts import render
 from resume.models import Profile
 from .models import BlogTittle, References
 
+
 # Create your views here.
 
 
@@ -10,7 +11,8 @@ def maintenance(request):
         request=request,
         template_name='blog/maintenance.html',
         context={
-            'title': 'Maintenance'
+            'title': 'Maintenance',
+            'profile': Profile.objects.first(),
         }
     )
 
