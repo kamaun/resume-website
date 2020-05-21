@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% block title %}Projects{% endblock %}
+
+{% block content %}
+<div class="container col-20" id="categories" >
+    <h1 class="mt-02">Projects</h1>
+    <hr class="mt-0 mb-10">
+    <div class="project-list-instructions">
+        <span class="text-muted">
+            Welcome to my projects page. Most of the projects listed here
+            have other projects that sum up to it. Click on the name of the project
+            to view further details on it
+        </span>
+    </div>
+    <hr class="mt-0 mb-10">
+    <div class="row project-list-row">
+        <div class="col-sm-6 project-list-column">
+            {% for project in projects %}
+                <div class="container project-container {{ project.project_name }}">
+                    <a href="{% url 'main:projectdetails' project.projectid %}">
+                        <h3>{{ project.project_name }}</h3>
+                    </a>
+                    <div class="project-list">
+                        <div class="project-source row">
+                            <div class="col-sm-2">
+                                <span class="text-muted"> Position: </span>
+                            </div>
+                            <div class="container position">
+                                <span class="position source">
+                                    {% if project.is_personal_project == False %}
+                                        {% if project.school == None %}
+                                            {{ project.job }}
+                                        {% else %}
+                                            {{ project.school }}
+                                        {% endif %}
+                                    {% else %}
+                                        Personal
+                                    {% endif %}
+                                </span>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="project-tech row">
+                            <div class="col-sm-2">
+                                <span class="text-muted"> Technology: </span>
+                            </div>
+                            <div class="container tech-list">
+                                <ul class="list-of-tech">
+                                    {% for tech in techs_used %}
+                                        {% if tech.project.projectid == project.projectid %}
+                                            <li>{{ tech.technology }}</li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="project-task row">
+                            <div class="col-sm-2">
+                                <span class="text-muted"> Task: </span>
+                            </div>
+                            <div class="container tech-list">
+                                <ul class="list-of-tech">
+                                    {% for task in tasks %}
+                                        {% if task.project.projectid == project.projectid %}
+                                            <li>{{ task.title }}</li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="col-sm-6 project-list-column">
+            {% for project in projects2 %}
+                <div class="container project-container {{ project.project_name }}">
+                    <a href="{% url 'main:projectdetails' project.projectid %}">
+                        <h3>{{ project.project_name }}</h3>
+                    </a>
+                    <div class="project-list">
+                        <div class="project-source row">
+                            <div class="col-sm-2">
+                                <span class="text-muted"> Position: </span>
+                            </div>
+                            <div class="container position">
+                                <span class="position source">
+                                    {% if project.is_personal_project == False %}
+                                        {% if project.school == None %}
+                                            {{ project.job }}
+                                        {% else %}
+                                            {{ project.school }}
+                                        {% endif %}
+                                    {% else %}
+                                        Personal
+                                    {% endif %}
+                                </span>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="project-tech row">
+                            <div class="col-sm-2">
+                                <span class="text-muted"> Technology: </span>
+                            </div>
+                            <div class="container tech-list">
+                                <ul class="list-of-tech">
+                                    {% for tech in techs_used %}
+                                        {% if tech.project.projectid == project.projectid %}
+                                            <li>{{ tech.technology }}</li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="project-task row">
+                            <div class="col-sm-2">
+                                <span class="text-muted"> Task: </span>
+                            </div>
+                            <div class="container tech-list">
+                                <ul class="list-of-tech">
+                                    {% for task in tasks %}
+                                        {% if task.project.projectid == project.projectid %}
+                                            <li>{{ task.title }}</li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

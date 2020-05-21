@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %} Other Experiences {% endblock %}
+{% block content %}
+    <h1>Other Experiences</h1>
+    <br/>
+    <div class="col-20 work home-section" id="work">
+        <h3>Work Experience</h3>
+        <hr class="mt-0 mb-10">
+        {% for work in work_experience %}
+            <div class="container job-row {{ work.work_name }}">
+                <h4>{{ work }}</h4>
+                <h5>{{ work.work_name }}</h5>
+                <h6>{{ work.city }}, {{ work.state }}, {{ work.country }}</h6>
+                <div class="work-period">
+                    <span class="text-muted" >
+                        From {{ work.from_month }} {{ work.from_year }} to {% if work.is_current_job %} Present {% else %} {{ work.end_month }} {{ work.end_year }} {% endif %}
+                    </span>
+                </div>
+                <div class="work-description container row">
+                    {{ work.description }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

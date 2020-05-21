@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title %}Project Detail{% endblock %}
+{% block content %}
+<div class="container other-projects">
+    <span class="text-muted">
+        Click <a href="{% url 'main:projects' %}"> here</a> to view other projects
+    </span>
+</div>
+
+<div class="container project-detail-view">
+    <h1>{{ project.project_name }}</h1>
+    <div class="container project-detail project-summary">
+        <h3>Summary</h3>
+        <hr class="mt-0 mb-10">
+        <div class="row project-summary-row">
+            <div class="col-sm-9 summary-column">
+                {{ project.description }}
+            </div>
+            <div class="col-sm-3 picture-column">
+
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="container project-detail project-technology">
+            <h3>Technology</h3>
+            <hr class="mt-0 mb-10">
+            <div class="row project-technology-row">
+                {% if TechUse1 %}
+                    <div class="col-sm-6 tech-side-1">
+                        <ul class="tech-unordered-list">
+                            {% for use in TechUse1 %}
+                                <li><span class="text-muted">{{ use.technology }}</span>:- {{ use.purpose }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                {% if TechUse2 %}
+                    <div class="col-sm-6 tech-side-2">
+                        <ul class="tech-unordered-list">
+                            {% for use in TechUse2 %}
+                                <li><span class="text-muted">{{ use.technology }}</span>:- {{ use.purpose }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+    </div>
+    <br>
+    <br>
+    <div class="container project-detail project-tasks">
+        {% if tasks %}
+            <h3>Tasks</h3>
+            <hr class="mt-0 mb-10">
+            {% for task in tasks %}
+                <div class="container task-detail">
+                    <h4>{{ task.title }}</h4>
+                    <div class="container task-description">
+                        {{ task.description }}
+                    </div>
+                </div>
+                <br/>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
