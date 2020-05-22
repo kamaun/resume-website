@@ -9,5 +9,5 @@
 /blog/migrations/__pycache__/
 /blog/migrations/
 /Production/
-.env
+/.env
 
